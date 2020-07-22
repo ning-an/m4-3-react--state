@@ -261,6 +261,26 @@ const App = () => {
 render(<App />);
 ```
 
+const Counter = ({count, setCount}) => {
+return (
+<>
+<button onClick={() => setCount(count + 1)}>Increment</button>
+</>
+);
+};
+
+const App = () => {
+const [count, setCount] = React.useState(0);
+return (
+<>
+The current count is: {count}
+<Counter count={count} setCount={setCount}/>
+</>
+);
+};
+
+render(<App />);
+
 ---
 
 ```jsx live=true
@@ -304,6 +324,45 @@ const App = () => {
 
 render(<App />);
 ```
+
+const FavouriteFood = ({food, setFood}) => {
+return (
+<>
+<label>
+<input
+type="radio"
+name="food"
+value="pizza"
+checked={food === "pizza"}
+onChange={() => setFood("pizza")}
+/>
+Pizza
+</label>
+<label>
+<input
+type="radio"
+name="food"
+value="broccoli"
+checked={food === "broccoli"}
+onChange={() => setFood("broccoli")}
+/>
+Broccoli
+</label>
+</>
+);
+};
+
+const App = () => {
+const [food, setFood] = React.useState("");
+return (
+<>
+<p>My favourite food is: {food} <p>
+<FavouriteFood food={food} setFood={setFood} />
+</>
+);
+};
+
+render(<App />);
 
 ---
 
