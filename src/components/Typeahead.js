@@ -103,14 +103,12 @@ const Typeahead = ({ suggestions, handleSelect }) => {
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = React.useState(
     -1
   );
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const refFocus = useRef(null);
 
   useEffect(() => {
     refFocus.current.focus();
   }, []);
-  const filteredSuggestions = suggestions.filter((suggestion) =>
-    suggestion.title.toLowerCase().includes(value.toLowerCase())
-  );
   return (
     <Wrapper>
       <div>
@@ -120,6 +118,11 @@ const Typeahead = ({ suggestions, handleSelect }) => {
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
+            setFilteredSuggestions(
+              suggestions.filter((suggestion) =>
+                suggestion.title.toLowerCase().includes(value.toLowerCase())
+              )
+            );
           }}
           onKeyDown={(e) => {
             switch (e.key) {
@@ -137,6 +140,11 @@ const Typeahead = ({ suggestions, handleSelect }) => {
               case "ArrowDown": {
                 selectedSuggestionIndex < filteredSuggestions.length - 1 &&
                   setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+                return;
+              }
+              case "Escape": {
+                setFilteredSuggestions([]);
+                return;
               }
             }
           }}
